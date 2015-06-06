@@ -1,0 +1,153 @@
+const int N = 1001;
+
+struct minCostFlow {
+    struct edge {
+        int from, to;
+        long long cap, flow, cost;
+    };
+
+
+    vector <edge> edges;
+    vector<int> g[N];
+    int vsize;
+
+    int p[N];
+    char used[N];
+    long long dist[N];
+    long long pi[N];
+    int q[N];
+
+
+    void addEdge(int from, int to, long long cap, long long cost) {
+        g[from].pb(edges.size());
+        edges.push_back(edge{from, to, cap, 0, cost});
+        g[to].pb(edges.size());
+        edges.pb(edge{to, from, 0, 0, -cost});
+    }
+
+
+    bool fb(int s, int t) {
+        memset(p, 0xff, vsize * sizeof(int));
+        memset(dist, 0x3f, vsize * sizeof(long long));
+        memset(used, 0, vsize * sizeof(char));
+        dist[s] = 0;
+        int q1 = 0, q2 = 0;
+        q[q2++] = s;
+        used[s] = 1;
+        while (q1 != q2) {
+            int v = q[q1++];
+            used[v] = 0;
+            if (q1 == vsize) {
+                q1 = 0;
+            }
+            for (int ed : g[v]) {
+                edge &e = edges[ed];
+                int to = e.to;
+                long long len = e.cost;
+                if (e.cap > e.flow && dist[to] > dist[v] + len + pi[to] - pi[v]) {
+                    dist[to] = dist[v] + len + pi[to] - pi[v];
+                    p[to] = ed;
+                    if (!used[to]) {
+                        used[to] = 1;
+                        q[q2++] = to;
+                        if (q2 == vsize) {
+                            q2 = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        assert(p[t] != -1);
+        return p[t] != -1;
+    }
+
+    int cost;
+    int flow;
+
+    long long pushFlow(int s, int t, long long need) {
+        long long addFlow = need;
+        for (int cur = t, e = p[cur]; cur != s; cur = edges[e].from, e = p[cur]) {
+            addFlow = min(addFlow, edges[e].cap - edges[e].flow);
+        }
+        cost += (dist[t] - pi[t]) * addFlow;
+        flow += addFlow;
+        for (int cur = t, e = p[cur]; cur != s; cur = edges[e].from, e = p[cur]) {
+            edges[e].flow += addFlow;
+            edges[e ^ 1].flow -= addFlow;
+        }
+        for (int i = 0; i < vsize; ++i) {
+            pi[i] -= dist[i];
+        }
+        return addFlow;
+    }
+
+    void fb3() {
+        memset(p, 0xff, vsize * sizeof(int));
+        memset(dist, 0, vsize * sizeof(long long));
+        memset(used, 0, vsize * sizeof(char));
+
+        int q1 = 0, q2 = 0;
+        for (int i = 0; i < vsize; ++i) {
+            q[q2++] = i;
+            used[i] = 1;
+        }
+        while (q1 != q2) {
+            int v = q[q1++];
+            used[v] = 0;
+            if (q1 == vsize + 1) {
+                q1 = 0;
+            }
+            for (int ed : g[v]) {
+                edge &e = edges[ed];
+                int to = e.to;
+                long long len = e.cost;
+                if (e.cap > e.flow && dist[to] > dist[v] + len) {
+                    dist[to] = dist[v] + len;
+                    p[to] = ed;
+                    if (!used[to]) {
+                        used[to] = 1;
+                        q[q2++] = to;
+                        if (q2 == vsize + 1) {
+                            q2 = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    bool check() {
+        long long inf = 0x3f3f3f3f3f3f3f3fll;
+        memset(p, 0xff, vsize * sizeof(int));
+        memset(dist, 0, vsize * sizeof(long long));
+        int x = -1;
+
+        for (int i = 0; i < vsize; ++i) {
+            x = -1;
+            for (int j = 0; j < (int)edges.size(); ++j) {
+                const edge & e = edges[j];
+                if (e.flow < e.cap && dist[e.from] + e.cost < dist[e.to]) {
+                    dist[e.to] = max(-inf, dist[e.from] + e.cost);
+                    p[e.to] = j;
+                    x = e.to;
+                }
+            }
+        }
+        return x == -1;
+    }
+
+    void calcMinCostFlow(int s, int t, long long needFlow) {
+        while (needFlow && fb(s, t)) {
+            needFlow -= pushFlow(s, t, needFlow);
+        }
+    }
+
+    minCostFlow(int vertices) {
+        flow = 0;
+        vsize = vertices;
+        cost = 0;
+        memset(pi, 0, vsize * sizeof(long long));
+    }
+};
