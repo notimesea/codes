@@ -17,21 +17,27 @@ struct Point {
     friend long long cross(const Point &l, const Point &r) {
         return l.x * r.y - l.y * r.x;
     }
+    long long distance(const Point &r) const {
+        return (x - r.x) * (x - r.x) + (y - r.y) * (y - r.y);
+    }
     friend ostream & operator<<(ostream & os, const Point &r) {
         return os << "{" << r.x << ", " << r.y << "}";
     }
     bool operator<(const Point &r) const {
         return x < r.x || (x == r.x && y < r.y);
     }
+    bool operator==(const Point &r) const {
+        return x == r.x && y == r.y;
+    }
 };
 
-void makeConvex(vector <Point> & points) {
+void makeConvex(vector <Point> &points) {
     if (points.size() < 3) {
         return;
     }
     iter_swap(points.begin(), min_element(points.begin(), points.end()));
     auto cmp = [&](const Point &l, const Point &r) {
-        long long cr = cross(l - points.front(), r - points.front()) > 0;
+        long long cr = cross(l - points.front(), r - points.front());
         if (cr != 0) {
             return cr > 0;
         }
@@ -48,4 +54,9 @@ void makeConvex(vector <Point> & points) {
         hull.push_back(point);
     }
     points.swap(hull);
+}
+
+void makeUnique(vector <Point> &points) {
+    sort(points.begin(), points.end());
+    points.erase(unique(points.begin(), points.end()), points.end());
 }
