@@ -1,26 +1,34 @@
 mt19937 generator;
 
+template <class K, class V>
 struct node {
-    int key;
-    int prior;
+    K key;
+    V value;
+    unsigned prior;
     int cnt;
 
     node *l, *r;
 
-    node(int k) {
+    node(K k, V v = 0) {
         key = k;
+        value = v;
         prior = generator();
         cnt = 1;
         l = r = 0;
     }
 
-    inline friend int get(node * v) {
+    inline friend int getCount(node * v) {
         return v ? v->cnt : 0;
+    }
+
+    inline friend V getValue(node *v) {
+        return v ? v->value : 0;
     }
 
     inline friend void update(node * v) {
         if (v) {
-            v->cnt = 1 + get(v->l) + get(v->r);
+            v->cnt = 1 + getCount(v->l) + getCount(v->r);
+            v->value = getValue(v->l) + getValue(v->r);
         }
     }
 
@@ -28,7 +36,7 @@ struct node {
         if (!v) {
             return void(l = r = 0);
         }
-        int k = get(v->l);
+        int k = getCount(v->l);
         if (cnt <= k) {
             split(v->l, l, v->l, cnt), r = v;
         } else {
