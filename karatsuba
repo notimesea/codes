@@ -25,7 +25,7 @@ struct karatsuba {
 
     T * multiply(const T *a, const T *b, size_t n) {
         if (n <= 32) {
-            T * cur = allocate(2 * n - 1);
+            T * cur = allocate(2 * n);
             for (int i = 0; i < n; ++i) {
                 for (int j = 0; j < n; ++j) {
                     cur[i + j] += a[i] * b[j];
@@ -36,7 +36,7 @@ struct karatsuba {
 
         const size_t n2 = n / 2;
 
-        T * res = allocate(2 * n - 1);
+        T * res = allocate(2 * n);
 
         T * la = copyOf(n2, a);
         T * ra = copyOf(n2, a + n2);
@@ -55,13 +55,13 @@ struct karatsuba {
 
         T * m = multiply(la, lb, n2);
 
-        for (int i = 0; i < n - 1; ++i) {
+        for (int i = 0; i < n; ++i) {
             res[i] += l[i];
             res[i + n] += r[i];
             res[i + n2] += m[i] - l[i] - r[i];
         }
 
-        clear(5 * n - 3);
+        clear(5 * n);
 
         return res;
     }
