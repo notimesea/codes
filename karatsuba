@@ -56,8 +56,8 @@ struct karatsuba {
         T * m = multiply(la, lb, n2);
 
         for (int i = 0; i < n - 1; ++i) {
-            res[i] += r[i];
-            res[i + n] += l[i];
+            res[i] += l[i];
+            res[i + n] += r[i];
             res[i + n2] += m[i] - l[i] - r[i];
         }
 
