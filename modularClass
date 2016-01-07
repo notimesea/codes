@@ -1,0 +1,37 @@
+template<long long modulo = 1000000007>
+struct Number {
+    long long value;
+
+    Number<modulo>(const long long &v) : value(v % modulo) { }
+
+    Number<modulo> operator+(const Number<modulo> &r) const {
+        return Number<modulo>{(value + r.value) % modulo};
+    }
+
+    Number<modulo> operator-(const Number<modulo> &r) const {
+        return Number<modulo>{(value - r.value + modulo) % modulo};
+    }
+
+    Number<modulo> operator*(const Number<modulo> &r) const {
+        return Number<modulo>{(value * r.value) % modulo};
+    }
+
+    Number<modulo> reciprocal() const {
+        long long x = value;
+        long long res = 1;
+        while (x != 1) {
+            res = (res * (-modulo / x + modulo)) % mod;
+            x = modulo % x;
+        }
+        assert(res * value % modulo == 1);
+        return res;
+    }
+
+    Number<modulo> operator/(const Number<modulo> &r) const {
+        return operator*(r.reciprocal());
+    }
+
+    friend ostream &operator<<(ostream &os, const Number<modulo> &r) {
+        return os << r.value;
+    }
+};
