@@ -1,65 +1,78 @@
-const int MAXN = 1000; // число вершин
- 
-struct edge {
-	int a, b, cap, flow;
-};
- 
-int n, s, t, d[MAXN], ptr[MAXN], q[MAXN];
-vector<edge> e;
-vector<int> g[MAXN];
- 
-void add_edge (int a, int b, int cap) {
-	edge e1 = { a, b, cap, 0 };
-	edge e2 = { b, a, 0, 0 };
-	g[a].push_back ((int) e.size());
-	e.push_back (e1);
-	g[b].push_back ((int) e.size());
-	e.push_back (e2);
-}
- 
-bool bfs() {
-	int qh=0, qt=0;
-	q[qt++] = s;
-	memset (d, -1, n * sizeof d[0]);
-	d[s] = 0;
-	while (qh < qt && d[t] == -1) {
-		int v = q[qh++];
-		for (size_t i=0; i<g[v].size(); ++i) {
-			int id = g[v][i],
-				to = e[id].b;
-			if (d[to] == -1 && e[id].flow < e[id].cap) {
-				q[qt++] = to;
-				d[to] = d[v] + 1;
-			}
-		}
-	}
-	return d[t] != -1;
-}
- 
-int dfs (int v, int flow) {
-	if (!flow)  return 0;
-	if (v == t)  return flow;
-	for (; ptr[v]<(int)g[v].size(); ++ptr[v]) {
-		int id = g[v][ptr[v]],
-			to = e[id].b;
-		if (d[to] != d[v] + 1)  continue;
-		int pushed = dfs (to, min (flow, e[id].cap - e[id].flow));
-		if (pushed) {
-			e[id].flow += pushed;
-			e[id^1].flow -= pushed;
-			return pushed;
-		}
-	}
-	return 0;
-}
- 
-int dinic() {
-	int flow = 0;
-	for (;;) {
-		if (!bfs())  break;
-		memset (ptr, 0, n * sizeof ptr[0]);
-		while (int pushed = dfs (s, INT_MAX))
-			flow += pushed;
-	}
-	return flow;
-}
+struct Dinic {
+#define SET(p) memset(p, -1, sizeof(p))
+#define CLR(p) memset(p, 0, sizeof(p))
+#define i64 long long
+
+    static const int INF = 0x7fffffff;
+    static const int MAXN = 1 << 20, MAXE = 1 << 22;
+
+    int src, snk, nNode, nEdge;
+    int Q[MAXN], fin[MAXN], pro[MAXN], dist[MAXN];
+    int flow[MAXE], cap[MAXE], next[MAXE], to[MAXE];
+
+    inline void init(int _src, int _snk, int _n) {
+        src = _src, snk = _snk, nNode = _n, nEdge = 0;
+        SET(fin);
+    }
+
+    inline void add(int u, int v, int c) {
+    	assert(u < nNode);
+	assert(v < nNode);
+        assert(nEdge < MAXE);
+        to[nEdge] = v, cap[nEdge] = c, flow[nEdge] = 0, next[nEdge] = fin[u], fin[u] = nEdge++;
+	assert(nEdge < MAXE);
+        to[nEdge] = u, cap[nEdge] = 0, flow[nEdge] = 0, next[nEdge] = fin[v], fin[v] = nEdge++;
+    }
+
+    bool bfs() {
+        int st, en, i, u, v;
+        SET(dist);
+        dist[src] = st = en = 0;
+        Q[en++] = src;
+        while (st < en) {
+            u = Q[st++];
+            for (i = fin[u]; ~i; i = next[i]) {
+                v = to[i];
+                if (flow[i] < cap[i] && dist[v] == -1) {
+                    dist[v] = dist[u] + 1;
+                    Q[en++] = v;
+                }
+            }
+        }
+        return dist[snk] != -1;
+    }
+
+    int dfs(int u, int fl) {
+        if (u == snk) return fl;
+        for (int &e = pro[u], v, df; ~e; e = next[e]) {
+            v = to[e];
+            if (flow[e] < cap[e] && dist[v] == dist[u] + 1) {
+                df = dfs(v, min(cap[e] - flow[e], fl));
+                if (df > 0) {
+                    flow[e] += df;
+                    flow[e ^ 1] -= df;
+                    return df;
+                }
+            }
+        }
+        return 0;
+    }
+
+    i64 dinitz() {
+        i64 ret = 0;
+        int df;
+        while (bfs()) {
+            memcpy(pro, fin, nNode * sizeof(fin[0]));
+            while (true) {
+                df = dfs(src, INF);
+                if (df) ret += df;
+                else break;
+            }
+        }
+        return ret;
+    }
+
+#undef CLR
+#undef SET
+#undef i64
+} d;
