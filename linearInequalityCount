@@ -14,7 +14,7 @@ ll s1(ll X) {
 ll get_count(ll A, ll B, ll C) {
   assert(A > 0 && B > 0);
   if (C < 0) return 0;
-  
+
   if (A < B) swap(A, B);
 
   ll U = A / B;
@@ -27,21 +27,25 @@ ll get_count(ll A, ll B, ll C) {
 // A * x + B * y <= C
 // 0 <= x <= X
 ll get_count(ll A, ll B, ll C, ll X) {
-  assert(B > 0);
+  assert(B > 0 && A >= 0);
   if (C < 0) return 0;
+
   if (A == 0) {
     return (C / B + 1) * (X + 1);
   }
-  if (A * (X + 1) > C) {
+
+
+  if (C / A <= X) {
     return get_count(A, B, C);
   }
 
   ll Y = (C - A * X) / B;
+
   C -= Y * B;
 
   assert(A * X + B > C);
 
-  if (A * (X + 1) > C) {
+  if (C / A <= X) {
     return (X + 1) * Y + get_count(A, B, C);
   } else {
     return (X + 1) * Y + get_count(A, B, C) - (C / A - X);
@@ -51,6 +55,7 @@ ll get_count(ll A, ll B, ll C, ll X) {
 // A * x + B * y <= C
 // 0 <= x <= X, 0 <= y <= Y
 ll get_count(ll A, ll B, ll C, ll X, ll Y) {
+  assert(A >= 0 && B >= 0);
   if (C < 0) return 0;
 
   if (A == 0 || B == 0) {
@@ -60,7 +65,7 @@ ll get_count(ll A, ll B, ll C, ll X, ll Y) {
   }
 
   //inclusion-exclusion
-  return get_count(A, B, C, X) + get_count(B, A, C, Y) + get_count(A, B, C - A * (X + 1) - B * (Y + 1)) - get_count(A, B, C);
+  return get_count(A, B, C, X) + get_count(B, A, C, Y) - get_count(A, B, C) + ((C / A > X && C / B > Y) ? get_count(A, B, C - A * (X + 1) - B * (Y + 1)) : 0);
 }
 
 ll stupid_count(ll A, ll B, ll C, ll X, ll Y) {
