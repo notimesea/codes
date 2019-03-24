@@ -31,36 +31,37 @@ struct HashMap {
         size = 0;
     }
 
-    V& operator[](const K& k) {
+    Node &find(const K& k) {
         size_t h = hash(k);
         while (nodes[h].state == State::used && nodes[h].key != k) {
             h = (h + 1) & ((1 << D) - 1);
         }
-        size += nodes[h].state == State::free;
-        nodes[h].state = State::used;
-        nodes[h].key = k;
-        return nodes[h].value;
+        return nodes[h];
     }
 
-    const V& operator[](const K& k) const {
+    const Node &find(const K& k) const {
         size_t h = hash(k);
         while (nodes[h].state == State::used && nodes[h].key != k) {
             h = (h + 1) & ((1 << D) - 1);
         }
-        size += nodes[h].state == State::free;
-        nodes[h].state = State::used;
-        nodes[h].key = k;
-        return nodes[h].value;
+        return nodes[h];
+    }
+
+    V& operator[](const K& k) {
+        Node &node = find(k);
+
+        size += node.state == State::free;
+        node.state = State::used;
+        node.key = k;
+
+        return node.value;
     }
 
     bool count(const K& k) const {
-        int h = hash(k);
-        while (nodes[h].state == State::used && nodes[h].key != k) {
-            h = (h + 1) & ((1 << D) - 1);
-        }
-        return nodes[h].state == State::used;
-    }
+        const Node &node = find(k);
 
+        return nodes.state == State::used;
+    }
 };
 
 int main() {
