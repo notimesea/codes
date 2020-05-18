@@ -57,20 +57,20 @@ struct divider_64 {
     uint64_t magic;
     uint8_t more;
 
-    static uint32_t div_64_to_64(uint64_t u1, uint64_t u0, uint64_t v, uint64_t *r) {
+    static uint64_t div_64_to_64(uint64_t u1, uint64_t u0, uint64_t v, uint64_t *r) {
         __uint128_t n = ((__uint128_t)u1 << 64) | u0;
         auto result = (uint64_t)(n / v);
         *r = (uint64_t)(n - result * (__uint128_t)v);
         return result;
     }
 
-    static uint32_t mullhi_u64(uint64_t x, uint64_t y) {
+    static uint64_t mullhi_u64(uint64_t x, uint64_t y) {
         __uint128_t xl = x, yl = y;
         __uint128_t rl = xl * yl;
         return (uint64_t)(rl >> 64);
     }
 
-    divider_64(uint32_t d) : value(d) {
+    divider_64(uint64_t d) : value(d) {
         assert(d != 0);
 
         uint32_t floor_log_2_d = 63 - __builtin_clzll(d);
