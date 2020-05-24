@@ -9,8 +9,7 @@ struct Number {
     }
 
     Number<modulo>& operator+=(const Number<modulo> &r) {
-        *this = Number<modulo>{(value + r.value) % modulo};
-        return *this;
+        return *this = operator+(r);
     }
 
     Number<modulo> operator-(const Number<modulo> &r) const {
@@ -18,8 +17,7 @@ struct Number {
     }
 
     Number<modulo>& operator-=(const Number<modulo> &r) {
-        *this = Number<modulo>{(value - r.value + modulo) % modulo};
-        return *this;
+        return *this = operator-(r);
     }
 
     Number<modulo> operator*(const Number<modulo> &r) const {
@@ -27,18 +25,32 @@ struct Number {
     }
 
     Number<modulo>& operator*=(const Number<modulo> &r) {
-        *this = Number<modulo>{(value * r.value) % modulo};
-        return *this;
+        return *this = operator*(r);
     }
 
     Number<modulo> reciprocal() const {
         long long x = value;
         long long res = 1;
         while (x != 1) {
-            res = (res * (-modulo / x + modulo)) % mod;
+            res = (res * (-modulo / x + modulo)) % modulo;
             x = modulo % x;
         }
         assert(res * value % modulo == 1);
+        return res;
+    }
+
+    Number<modulo> pow(long long n) const {
+        Number<modulo> res = 1;
+        Number<modulo> a = *this;
+
+        while (n) {
+            if (n & 1) {
+                res = res * a;
+            }
+            a = a * a;
+            n >>= 1;
+        }
+
         return res;
     }
 
@@ -47,8 +59,7 @@ struct Number {
     }
 
     Number<modulo>& operator/=(const Number<modulo> &r) {
-        *this = operator*(r.reciprocal());
-        return *this;
+        return *this = operator/(r.reciprocal());
     }
 
     bool operator==(const Number<modulo> &r) {
