@@ -62,11 +62,11 @@ struct Number {
         return *this = operator/(r.reciprocal());
     }
 
-    bool operator==(const Number<modulo> &r) {
+    bool operator==(const Number<modulo> &r) const {
         return value == r.value;
     }
 
-    bool operator!=(const Number<modulo> &r) {
+    bool operator!=(const Number<modulo> &r) const {
         return value != r.value;
     }
 
