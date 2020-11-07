@@ -1,0 +1,21 @@
+template <class T>
+struct fenwick {
+    vector <T> data;
+    fenwick(int n) {
+        data.resize(n);
+    }
+    
+    void add(int pos, T val) {
+        for (; pos < data.size(); pos |= pos + 1) {
+            data[pos] = data[pos] + val;
+        }
+    }
+    
+    T get(int r) const {
+        T res{};
+        for (; r >= 0; r &= r + 1, --r) {
+            res = res + data[r];
+        }
+        return res;
+    }
+};
