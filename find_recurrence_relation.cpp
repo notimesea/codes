@@ -1,225 +1,502 @@
-#include <cstdio>
-#include <cassert>
+//#pragma GCC optimize("Ofast", "unroll-loops", "omit-frame-pointer", "inline") //Optimization flags
+//#pragma GCC option("arch=native", "tune=native", "no-zero-upper") //Enable AVX
+//#pragma GCC target("sse,sse2,sse3,ssse3,sse4")  //Enable AVX
 
-#include <vector>
+#include <memory>
+#include <bits/stdc++.h>
+
+#define clr(x) memset((x), 0, sizeof(x))
+#define all(x) (x).begin(), (x).end()
+#define pb push_back
+#define mp make_pair
+#define x first
+#define y second
+#define forn(i, n) for(int i = 0; i < (int)(n); ++i)
+#define ford(i, n) for(int i = (int)(n) - 1; i >= 0; --i)
+#define for1(i, n) for(int i = 1; i <= (int)(n); ++i)
 
 using namespace std;
 
-using i64 = long long;
+#ifndef LOCAL
+#define cerr while(0) cerr
+#endif
 
-int mod_inv(int a, int mod) {
-  int b = mod, s = 1, t = 0, old_a = a;
-  while (b) {
-    int q = a / b;
-    swap(a %= b, b);
-    swap(s -= t * q, t);
-  }
-  if (a != 1) {
-    fprintf(stderr,
-      "Error: %d^{-1} mod %d does not exist.\n\n", old_a, mod);
-    assert(0);
-  }
-  return s < 0 ? s + mod : s;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<int, int> pii;
+//typedef pair<long long, long long> pii;
+typedef vector<long long> vll;
+typedef long double ld;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef int itn;
+typedef unsigned int uint;
+
+const ld PI = 3.1415926535897932384626433832795L;
+
+template<class T>
+bool uin(T &, const T &);
+
+template<class T>
+bool uax(T &, const T &);
+
+template<class T>
+T gcd(T, T);
+
+template<class T>
+T lcm(T, T);
+
+template<class _T>
+inline string tostr(const _T &);
+
+template<typename T>
+void input(T &);
+
+template<typename T = long long>
+T nxt();
+
+bool checkp(long long);
+
+template<typename T, typename N>
+T pw(T a, N n, T m);
+
+template<typename T>
+T inv(T a, T p);
+
+template<class _T>
+_T sqr(const _T &x);
+
+template<class T, class... Args>
+inline auto make_vec(size_t n, Args &&... args) {
+    if constexpr(sizeof...(args) == 1)
+        return vector<T>(n, T(args...));
+    else
+        return vector(n, make_vec<T>(args...));
 }
 
-vector<int> extended(int n, 
-    const vector< vector<int> >& coeffs, const vector<int>& terms, int mod) {
-
-  vector<int> ret(max<int>(n + 1, terms.size()));
-  copy(terms.begin(), terms.end(), ret.begin());
-  const int order = coeffs.size() - 1;
-  const int deg = coeffs[0].size() - 1;
-  assert((int) terms.size() >= order);
-  for (int m = terms.size(); m <= n; ++m) {
-    int s = 0;
-    for (int i = 1; i <= order; ++i) {
-      int k = m - i, t = ret[k];
-      for (int d = 0; d <= deg; ++d) {
-        s = (s + i64(t) * coeffs[i][d]) % mod;
-        t = i64(t) * k % mod;
-      }
-    }
-    int denom = 0, mpow = 1;
-    for (int d = 0; d <= deg; ++d) {
-      denom = (denom + i64(mpow) * coeffs[0][d]) % mod;
-      mpow = i64(mpow) * m % mod;
-    }
-    ret[m] = i64(mod - s) * mod_inv(denom, mod) % mod;
-  }
-  return ret;
+template<class... Args>
+inline auto make_vec(size_t n, Args &&... args) {
+    if constexpr(sizeof...(args) == 1)
+        return vector(n, args...);
+    else
+        return vector(n, make_vec(args...));
 }
 
-vector< vector<int> > find_recurrence_relation(
-    const vector<int>& terms, const int deg, const int mod, bool verify=true) {
 
-  const int n = terms.size();
-  const int B = (n + 2) / (deg + 2); // number of blocks
-  const int C = B * (deg + 1); // number of columns
-  const int R = n - (B - 1); // number of rows
-  assert(B >= 2); assert(R >= C - 1);
+int TTT;
 
-  auto mul = [mod] (int a, int b) { return i64(a) * b % mod; };
-  auto fixed = [mod] (int a) { return (a %= mod) < 0 ? a + mod : a; };
-  auto error = [] (int order, int deg) {
-    fprintf(stderr, 
-      "Error: Could not find a recurrence relation "
-      "of order <= %d and degree <= %d.\n\n", 
-      order, deg);
-    assert(0);
-  };
+void pre() {}
 
-  vector< vector<int> > mat(R, vector<int>(C));
-  for (int y = 0; y < R; ++y) {
-    for (int b = 0; b < B; ++b) {
-      for (int d = 0, v = fixed(terms[y + b]); d <= deg; ++d) {
-        mat[y][b * (deg + 1) + d] = v;
-        v = mul(v, y + b);
-      }
+bool checkp(long long x) {
+    if (x == 1) return true;
+    for (int i = 2; i * i <= x; ++i) {
+        if (x % i == 0) {
+            return false;
+        }
     }
-  }
 
-  int rank = 0;
-  for (int x = 0; x < C; ++x) {
-    int pivot = -1;
-    for (int y = rank; y < R; ++y) if (mat[y][x] != 0) {
-      pivot = y; break;
-    }
-    if (pivot < 0) break;
-    if (pivot != rank) swap(mat[rank], mat[pivot]);
-    int inv = mod_inv(mat[rank][x], mod);
-    for (int x2 = x; x2 < C; ++x2) mat[rank][x2] = mul(mat[rank][x2], inv);
-    for (int y = rank + 1; y < R; ++y) if (mat[y][x]) {
-      int c = mod - mat[y][x];
-      for (int x2 = x; x2 < C; ++x2) {
-        mat[y][x2] = (i64(mat[y][x2]) + i64(c) * mat[rank][x2]) % mod;
-      }
-    }
-    ++rank;
-  }
-
-  if (rank == C) error(B - 1, deg);
-
-  for (int y = rank - 1; y >= 0; --y) if (mat[y][rank]) {
-    assert(mat[y][y] == 1);
-    int c = mod - mat[y][rank];
-    for (int y2 = 0; y2 < y; ++y2) {
-      mat[y2][rank] = (mat[y2][rank] + i64(c) * mat[y2][y]) % mod;
-    }
-  }
-
-  int order = rank / (deg + 1);
-  vector< vector<int> > ret(order + 1, vector<int>(deg + 1));
-  ret[0][rank % (deg + 1)] = 1;
-  for (int y = rank - 1; y >= 0; --y) {
-    int k = order - y / (deg + 1), d = y % (deg + 1);
-    ret[k][d] = (mod - mat[y][rank]) % mod;
-  }
-
-  if (verify) {
-    auto extended_terms = extended(n - 1, ret, 
-        vector<int>(terms.begin(), terms.begin() + order), mod);
-    for (int i = 0; i < (int) terms.size(); ++i) {
-      if (fixed(terms[i] - extended_terms[i]) != 0) error(B - 1, deg);
-    }
-  }
-
-  auto verbose = [&] {
-    int last = verify ? n - 1 : order + R - 1;
-    fprintf(stderr, 
-      "[ Found a recurrence relation ]\n"
-      "- order %d\n"
-      "- degree %d\n"
-      "- verified up to a(%d) (number of non-trivial terms: %d)\n",
-      order, deg, last, (last + 1) - ((deg + 2) * (order + 1) - 2)
-    );
-    fprintf(stderr, "{\n");
-    for (int k = 0; k <= order; ++k) {
-      fprintf(stderr, "  {");
-      for (int d = 0; d <= deg; ++d) {
-        if (d) fprintf(stderr, ", ");
-        fprintf(stderr, "%d", ret[k][d] <= mod / 2 ? ret[k][d] : ret[k][d] - mod);
-      }
-      fprintf(stderr, "}%s\n", k == order ? "" : ",");
-    }
-    fprintf(stderr, "}\n\n");
-  };
-  verbose();
-
-  return ret;
+    return true;
 }
 
-void show_extended_sequence(int n, const vector<int>& terms, int degree, int mod) {
-  auto coeffs = find_recurrence_relation(terms, degree, mod);
-  auto extended_terms = extended(n, coeffs, terms, mod);
-  for (int i = 0; i < (int) extended_terms.size(); ++i) {
-    printf("%d %d\n", i, extended_terms[i]);
-  }
-  puts("");
+const ll mod = 1000000007;
+
+template<long long modulo>
+struct Number {
+    long long value;
+
+    Number<modulo>(const long long &v = 0) : value(((v % modulo) + modulo) % modulo) { }
+
+    Number<modulo> operator+(const Number<modulo> &r) const {
+        return Number<modulo>{(value + r.value) % modulo};
+    }
+
+    Number<modulo>& operator+=(const Number<modulo> &r) {
+        return *this = operator+(r);
+    }
+
+    Number<modulo> operator-(const Number<modulo> &r) const {
+        return Number<modulo>{(value - r.value + modulo) % modulo};
+    }
+
+    Number<modulo>& operator-=(const Number<modulo> &r) {
+        return *this = operator-(r);
+    }
+
+    Number<modulo> operator*(const Number<modulo> &r) const {
+        return Number<modulo>{(value * r.value) % modulo};
+    }
+
+    Number<modulo>& operator*=(const Number<modulo> &r) {
+        return *this = operator*(r);
+    }
+
+    Number<modulo> reciprocal() const {
+        long long x = value;
+        long long res = 1;
+        while (x != 1) {
+            res = (res * (-modulo / x + modulo)) % modulo;
+            x = modulo % x;
+        }
+        assert(res * value % modulo == 1);
+        return res;
+    }
+
+    Number<modulo> pow(long long n) const {
+        Number<modulo> res = 1;
+        Number<modulo> a = *this;
+
+        while (n) {
+            if (n & 1) {
+                res = res * a;
+            }
+            a = a * a;
+            n >>= 1;
+        }
+
+        return res;
+    }
+
+    Number<modulo> operator/(const Number<modulo> &r) const {
+        return operator*(r.reciprocal());
+    }
+
+    Number<modulo>& operator/=(const Number<modulo> &r) {
+        return *this = operator/(r.reciprocal());
+    }
+
+    bool operator==(const Number<modulo> &r) const {
+        return value == r.value;
+    }
+
+    bool operator!=(const Number<modulo> &r) const {
+        return value != r.value;
+    }
+
+    friend ostream &operator<<(ostream &os, const Number<modulo> &r) {
+        return os << r.value;
+    }
+};
+
+
+
+template <long long mod>
+struct LinearRecurrenceFinder {
+    using num = Number<mod>;
+
+    vector<num> extended(int n,
+                         const vector< vector<num> >& coeffs, const vector<num>& terms) {
+
+        vector<num> ret(max<int>(n + 1, terms.size()));
+        copy(terms.begin(), terms.end(), ret.begin());
+        const int order = coeffs.size() - 1;
+        const int deg = coeffs[0].size() - 1;
+        assert((int) terms.size() >= order);
+        for (int m = terms.size(); m <= n; ++m) {
+            num s = 0;
+            for (int i = 1; i <= order; ++i) {
+                int k = m - i;
+                num t = ret[k];
+                for (int d = 0; d <= deg; ++d) {
+                    s = s + coeffs[i][d] * t;
+                    t *= k;
+                }
+            }
+            num denom = 0, mpow = 1;
+            for (int d = 0; d <= deg; ++d) {
+                denom = denom + mpow * coeffs[0][d];
+                mpow = mpow * m;
+            }
+            ret[m] = s * (-1) / denom;
+        }
+        return ret;
+    }
+
+    vector< vector<num> > find_recurrence_relation(
+            const vector<num>& terms, const int deg, bool verify=true) {
+
+        const int n = terms.size();
+        const int B = (n + 2) / (deg + 2); // number of blocks
+        const int C = B * (deg + 1); // number of columns
+        const int R = n - (B - 1); // number of rows
+        assert(B >= 2); assert(R >= C - 1);
+
+        auto error = [] (int order, int deg) {
+            fprintf(stderr,
+                    "Error: Could not find a recurrence relation "
+                    "of order <= %d and degree <= %d.\n\n",
+                    order, deg);
+            assert(0);
+        };
+
+        vector< vector<num> > mat(R, vector<num>(C));
+        for (int y = 0; y < R; ++y) {
+            for (int b = 0; b < B; ++b) {
+                num v = terms[y + b];
+                for (int d = 0; d <= deg; ++d) {
+                    mat[y][b * (deg + 1) + d] = v;
+                    v *= y + b;
+                }
+            }
+        }
+
+        int rank = 0;
+        for (int x = 0; x < C; ++x) {
+            int pivot = -1;
+            for (int y = rank; y < R; ++y) if (mat[y][x] != 0) {
+                    pivot = y; break;
+                }
+            if (pivot < 0) break;
+            if (pivot != rank) swap(mat[rank], mat[pivot]);
+            num inv = mat[rank][x].reciprocal();
+            for (int x2 = x; x2 < C; ++x2) mat[rank][x2] *= inv;
+            for (int y = rank + 1; y < R; ++y) if (mat[y][x] != 0) {
+                    num c = mat[y][x];
+                    for (int x2 = x; x2 < C; ++x2) {
+                        mat[y][x2] -= c * mat[rank][x2];
+                    }
+                }
+            ++rank;
+        }
+
+        if (rank == C) error(B - 1, deg);
+
+        for (int y = rank - 1; y >= 0; --y) if (mat[y][rank] != 0) {
+                assert(mat[y][y] == 1);
+                num c = mat[y][rank];
+                for (int y2 = 0; y2 < y; ++y2) {
+                    mat[y2][rank] -= c * mat[y2][y];
+                }
+            }
+
+        int order = rank / (deg + 1);
+        vector< vector<num> > ret(order + 1, vector<num>(deg + 1));
+        ret[0][rank % (deg + 1)] = 1;
+        for (int y = rank - 1; y >= 0; --y) {
+            int k = order - y / (deg + 1), d = y % (deg + 1);
+            ret[k][d] = mat[y][rank] * (-1);
+        }
+
+        if (verify) {
+            auto extended_terms = extended(n - 1, ret,
+                                           vector<num>(terms.begin(), terms.begin() + order));
+            for (int i = 0; i < (int) terms.size(); ++i) {
+                if (terms[i] != extended_terms[i]) error(B - 1, deg);
+            }
+        }
+
+        auto verbose = [&] {
+            int last = verify ? n - 1 : order + R - 1;
+            fprintf(stderr,
+                    "[ Found a recurrence relation ]\n"
+                    "- order %d\n"
+                    "- degree %d\n"
+                    "- verified up to a(%d) (number of non-trivial terms: %d)\n",
+                    order, deg, last, (last + 1) - ((deg + 2) * (order + 1) - 2)
+            );
+            fprintf(stderr, "{\n");
+            for (int k = 0; k <= order; ++k) {
+                fprintf(stderr, "  {");
+                for (int d = 0; d <= deg; ++d) {
+                    if (d) fprintf(stderr, ", ");
+                    fprintf(stderr, "%lld", ret[k][d].value <= mod / 2 ? ret[k][d].value : ret[k][d].value - mod);
+                }
+                fprintf(stderr, "}%s\n", k == order ? "" : ",");
+            }
+            fprintf(stderr, "}\n\n");
+        };
+        verbose();
+
+        return ret;
+    }
+
+    void show_extended_sequence(int n, const vector<num>& terms, int degree) {
+        auto coeffs = find_recurrence_relation(terms, degree);
+        auto extended_terms = extended(n, coeffs, terms);
+        for (int i = 0; i < (int) extended_terms.size(); ++i) {
+            cout << i << " " << extended_terms[i] << "\n";
+        }
+        cout << "\n";
+    }
+};
+
+void solve(int _) {
+    LinearRecurrenceFinder<mod> l;
+//    l.show_extended_sequence(10, {4, 4, 5, 9, 27, 123, 723, 5040}, 2);
+    // Factorial + 3
+    l.show_extended_sequence(10, {4, 4, 5, 9, 27, 123, 723, 5043, 40323}, 3);
 }
 
-int main() {
-  const int mod = 1e9 + 7;
 
-  // Ones
-  show_extended_sequence(10, {1, 1, 1, 1, 1}, 0, mod);
+int main(int argc, char **argv) {
+    ::TTT = 1;
+    pre();
 
-  // Factorials
-  show_extended_sequence(10, {1, 1, 2, 6, 24, 120}, 1, mod);
+    for (int test = 1; test <= ::TTT; ++test) {
+        solve(test);
+    }
 
-  // Catalan numbers
-  show_extended_sequence(10, {1, 1, 2, 5, 14, 42}, 1, mod);
-
-  // Subfactorials
-  show_extended_sequence(10, {1, 0, 1, 2, 9, 44, 265}, 1, mod);
-
-  // Motzkin numbers
-  show_extended_sequence(10, {1, 1, 2, 4, 9, 21, 51}, 1, mod);
-
-  // Large Schröder numbers
-  show_extended_sequence(10, {1, 2, 6, 22, 90, 394, 1806}, 1, mod);
-
-  // Error: (n + 1) a_n \equiv 0 (mod 2)
-  // show_extended_sequence(10, {0, 1, 0, 1, 0, 1, 0, 1, 0, 1}, 1, 2);
-
-  // Hertzsprung's problem: order 4, degree 1
-  show_extended_sequence(20, {
-    1, 1, 0, 0, 2, 
-    14, 90, 646, 5242, 47622, 
-    479306, 5296790, 63779034, 831283558, 661506141
-  }, 1, mod);
-
-  // yukicoder No.93: order 13, degree 2
-  show_extended_sequence(100, {
-    1, 1, 2, 2, 8, 
-    28, 152, 952, 7208, 62296, 
-    605864, 6522952, 76951496, 986411272, 647501133, 
-    653303042, 170637030, 248109503, 700583494, 619914523, 
-    682935856, 443753916, 423068688, 507501942, 315541972, 
-    110825117, 848156395, 798418282, 920964362, 23823302, 
-    114894774, 279365223, 992413784, 833179437, 785518302, 
-    524368220, 42214454, 140345871, 188150268, 808714798, 
-    718376249, 732000901, 955005007, 139255097, 484615744, 
-    615066955, 726914809, 856989248, 460819998, 321277105, 
-    536397091, 555447300, 597473569, 217709372, 24981477, 
-    143561526, 171000806, 137649694, 749333590, 700935246, 
-    916763337, 762367836, 296796066, 236278263, 398507715, 
-  }, 2, mod);
-
-  // binom(3 * i, i) ** 2 + binom(2 * i, i + 1): order 8, degree 5
-  show_extended_sequence(128, {
-    1, 10, 229, 7071, 245081, 
-    9018219, 344622888, 521041312, 917599501, 328470621, 
-    920199271, 726809819, 712906773, 531692419, 688496750, 
-    140388924, 514070772, 712606107, 333670208, 549905369, 
-    504023887, 34217948, 890190161, 703909490, 6403597, 
-    623962638, 685637246, 126160387, 956873888, 9766247, 
-    864866393, 563563889, 613532405, 710746029, 182520210, 
-    914377932, 648461424, 715143730, 918800735, 503145605, 
-    27402642, 282029583, 635728688, 91880493, 896737996, 
-    773282006, 625726102, 992524580, 494071629, 82874383, 
-    536460288, 218839718, 406647024, 248185000, 360613817,
-    546217158, 925224608, 482921337, 928327434, 372559325, 
-    614987117, 601351833, 765504201, 230666863, 98348380, 
-  }, 5, mod);
-  return 0;
+    return 0;
 }
+
+#ifdef LOCAL
+
+struct timer {
+    clock_t init;
+
+    timer() {
+        init = clock();
+    }
+
+    clock_t time() const {
+        return clock() - init;
+    }
+
+    ~timer() {
+        cerr << "Time elapsed: " << (double) (time()) / CLOCKS_PER_SEC * 1000 << " ms." << endl;
+    }
+};
+
+#include <sys/resource.h>
+
+struct init_str {
+    timer t{};
+
+    init_str() {
+        freopen("input.txt", "r", stdin);
+//    freopen("output.txt", "w", stdout);
+
+        rlimit R{};
+        getrlimit(RLIMIT_STACK, &R);
+        R.rlim_cur = R.rlim_max;
+        setrlimit(RLIMIT_STACK, &R);
+    }
+
+} init_global_;
+
+#endif // LOCAL
+
+//#define AUTO_MALLOC 0
+#ifdef AUTO_MALLOC
+namespace MALLOC {
+    const size_t MAX_HEAP = 768 * 1000 * 1000;
+    char buf[MAX_HEAP];
+    size_t ptr;
+}
+
+void *operator new(size_t size) {
+    void *result = MALLOC::buf + MALLOC::ptr;
+    MALLOC::ptr += size;
+    return result;
+}
+
+void operator delete(void *ptr) noexcept { /* DO NOTHING */ }
+
+#endif //AUTO_MALLOC
+
+template<typename T>
+T gcd(T x, T y) {
+    while (y > 0) {
+        x %= y;
+        swap(x, y);
+    }
+    return x;
+}
+
+template<class T>
+T lcm(T a, T b) {
+    return a / gcd(a, b) * b;
+}
+
+template<class _T>
+inline _T sqr(const _T &x) {
+    return x * x;
+}
+
+template<class _T>
+inline string tostr(const _T &a) {
+    ostringstream os("");
+    os << a;
+    return os.str();
+}
+
+template<typename T>
+inline void input(T &a) {
+    static int ed;
+    a = 0;
+    while (!isdigit(ed = getchar()) && ed != '-') {}
+    char neg = 0;
+    if (ed == '-') {
+        neg = 1;
+        ed = getchar();
+    }
+    while (isdigit(ed)) {
+        a = 10 * a + ed - '0';
+        ed = getchar();
+    }
+    if (neg) a = -a;
+}
+
+template<typename T>
+inline T nxt() {
+    T res;
+    input(res);
+    return res;
+}
+
+
+//bool checkp(long long v) {
+//    if (v < 2) return false;
+//    for (long long i = 2; i * i <= v; ++i) {
+//        if (v % i == 0) {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
+
+template<typename T, typename N>
+T pw(T a, N n, T m) {
+    T res = 1;
+    while (n) {
+        if (n & 1) {
+            res = res * a % m;
+        }
+        a = a * a % m;
+        n >>= 1;
+    }
+    return res;
+}
+
+template<typename T>
+T inv(T a, T p) {
+    T res = 1;
+    while (a > 1) {
+        res = res * (p - p / a) % p;
+        a = p % a;
+    }
+    return res;
+}
+
+template<class T>
+bool uin(T &a, const T &b) {
+    if (b < a) {
+        a = b;
+        return true;
+    }
+    return false;
+}
+
+template<class T>
+bool uax(T &a, const T &b) {
+    if (b > a) {
+        a = b;
+        return true;
+    }
+    return false;
+}
+
+
+
+
+
+
