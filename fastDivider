@@ -3,14 +3,14 @@ struct divider_32 {
     uint32_t magic;
     uint8_t more;
 
-    static uint32_t div_32_to_32(uint32_t u1, uint32_t u0, uint32_t v, uint32_t *r) {
+    static inline uint32_t div_32_to_32(uint32_t u1, uint32_t u0, uint32_t v, uint32_t *r) {
         uint64_t n = ((uint64_t)u1 << 32) | u0;
         auto result = (uint32_t)(n / v);
         *r = (uint32_t)(n - result * (uint64_t)v);
         return result;
     }
 
-    static uint32_t mullhi_u32(uint32_t x, uint32_t y) {
+    static inline uint32_t mullhi_u32(uint32_t x, uint32_t y) {
         uint64_t xl = x, yl = y;
         uint64_t rl = xl * yl;
         return (uint32_t) (rl >> 32u);
@@ -38,7 +38,7 @@ struct divider_32 {
         more &= 0x1F;
     }
 
-    friend uint32_t operator/(uint32_t numer, const divider_32 &d) {
+    friend inline uint32_t operator/(uint32_t numer, const divider_32 &d) {
         if (!d.magic) {
             return numer >> d.more;
         }
@@ -47,7 +47,7 @@ struct divider_32 {
         return t >> d.more;
     }
 
-    friend uint32_t operator%(uint32_t numer, const divider_32 &d) {
+    friend inline uint32_t operator%(uint32_t numer, const divider_32 &d) {
         return numer - (numer / d) * d.value;
     }
 };
@@ -57,7 +57,7 @@ struct divider_64 {
     uint64_t magic;
     uint8_t more;
 
-    static uint64_t div_64_to_64(uint64_t u1, uint64_t u0, uint64_t v, uint64_t *r) {
+    static inline uint64_t div_64_to_64(uint64_t u1, uint64_t u0, uint64_t v, uint64_t *r) {
         const uint64_t b = (1ULL << 32); // Number base (16 bits)
         uint64_t un1, un0; // Norm. dividend LSD's
         uint64_t vn1, vn0; // Norm. divisor digits
@@ -128,7 +128,7 @@ struct divider_64 {
     }
 
 
-    static uint64_t mullhi_u64(uint64_t x, uint64_t y) {
+    static inline uint64_t mullhi_u64(uint64_t x, uint64_t y) {
 #ifdef __SIZEOF_INT128__
         __uint128_t xl = x;
         __uint128_t rl = xl * y;
@@ -180,7 +180,7 @@ struct divider_64 {
         more &= 0x3f;
     }
 
-    friend uint64_t operator/(uint64_t numer, const divider_64 &d) {
+    friend inline uint64_t operator/(uint64_t numer, const divider_64 &d) {
         if (!d.magic) {
             return numer >> d.more;
         }
@@ -189,7 +189,7 @@ struct divider_64 {
         return t >> d.more;
     }
 
-    friend uint64_t operator%(uint64_t numer, const divider_64 &d) {
+    friend inline uint64_t operator%(uint64_t numer, const divider_64 &d) {
         return numer - (numer / d) * d.value;
     }
 };
