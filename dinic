@@ -1,32 +1,34 @@
 struct Dinic {
-#define SET(p) memset(p, -1, sizeof(p))
-#define CLR(p) memset(p, 0, sizeof(p))
-#define i64 long long
 
+#define i64 long long
     static const int INF = 0x7fffffff;
     static const int MAXN = 1 << 20, MAXE = 1 << 22;
 
     int src, snk, nNode, nEdge;
+
     int Q[MAXN], fin[MAXN], pro[MAXN], dist[MAXN];
     int flow[MAXE], cap[MAXE], next[MAXE], to[MAXE];
 
+
     inline void init(int _src, int _snk, int _n) {
         src = _src, snk = _snk, nNode = _n, nEdge = 0;
-        SET(fin);
+        assert(nNode < MAXN);
+        memset(fin, -1, nNode * sizeof(fin[0]));
     }
 
     inline void add(int u, int v, int c) {
-    	assert(u < nNode);
-	assert(v < nNode);
+        assert(u < nNode);
+        assert(v < nNode);
         assert(nEdge < MAXE);
         to[nEdge] = v, cap[nEdge] = c, flow[nEdge] = 0, next[nEdge] = fin[u], fin[u] = nEdge++;
-	assert(nEdge < MAXE);
+        assert(nEdge < MAXE);
         to[nEdge] = u, cap[nEdge] = 0, flow[nEdge] = 0, next[nEdge] = fin[v], fin[v] = nEdge++;
     }
 
     bool bfs() {
         int st, en, i, u, v;
-        SET(dist);
+        memset(dist, -1, nNode * sizeof(dist[0]));
+
         dist[src] = st = en = 0;
         Q[en++] = src;
         while (st < en) {
@@ -58,8 +60,8 @@ struct Dinic {
         return 0;
     }
 
-    i64 dinitz() {
-        i64 ret = 0;
+    int dinitz() {
+        int ret = 0;
         int df;
         while (bfs()) {
             memcpy(pro, fin, nNode * sizeof(fin[0]));
