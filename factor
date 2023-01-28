@@ -28,14 +28,14 @@ bool mr_test(ll n, int a, ll d, int s)
     return true;
 }
 
-bool miller_rabin(ll n, int k = 5)
+bool miller_rabin(ll n, int k = 50)
 {
     if (n < 4) return n == 2 || n == 3;
     if (n % 2 == 0 || n % 3 == 0) return false;
 
-    int s = __builtin_ctz(n - 1);
+    int s = __builtin_ctzll(n - 1);
     ll d = (n - 1) >> s;
-    for (int it = 1; it <= 5; ++it)
+    for (int it = 1; it <= k; ++it)
     {
         int a = 2 + rand() % (n - 3);
         if (mr_test(n, a, d, s)) return false;
@@ -66,7 +66,7 @@ ll any_divisor_of(ll n)
 
 void factor(long long l, map <long long, int> &f) {
     for (ll p = 2; p <= 2000000; p++) {
-        if (l % p == 0) {
+        while (l % p == 0) {
             f[p]++;
             l /= p;
         }
@@ -80,6 +80,7 @@ void factor(long long l, map <long long, int> &f) {
         f[l]++;
         return;
     }
+
 
     ll p = any_divisor_of(l);
     assert(p != l);
