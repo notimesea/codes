@@ -65,7 +65,7 @@ ll any_divisor_of(ll n)
 }
 
 void factor(long long l, map <long long, int> &f) {
-    for (ll p = 2; p <= 2000000; p++) {
+    for (ll p = 2; p <= 2000000 && l > 1; p++) {
         while (l % p == 0) {
             f[p]++;
             l /= p;
