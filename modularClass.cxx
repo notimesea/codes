@@ -2,7 +2,7 @@ template<long long modulo>
 struct Number {
     long long value;
 
-    Number<modulo>(const long long &v = 0) : value(((v % modulo) + modulo) % modulo) { }
+    Number(const long long &v = 0) : value(((v % modulo) + modulo) % modulo) { }
 
     Number<modulo> operator+(const Number<modulo> &r) const {
         return Number<modulo>{(value + r.value) % modulo};
