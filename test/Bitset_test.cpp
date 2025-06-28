@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef unsigned long long ull;
-#include "../Bitset"
+#include "../bitset.hpp"
 int main(){
     Bitset b(64);
     b.set(5);
