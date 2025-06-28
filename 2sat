@@ -65,7 +65,7 @@ struct sat2 {
             }
         }
 
-        reverse(all(order));
+        reverse(order.begin(), order.end());
 
         int c = 0;
 
