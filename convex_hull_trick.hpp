@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 struct Line {
     long long m, b;

@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 struct BerlekampMassey {
     int L, m, b, n;

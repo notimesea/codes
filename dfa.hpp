@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 struct Automaton {
     using moves_t = vector <pair <int, int> >;

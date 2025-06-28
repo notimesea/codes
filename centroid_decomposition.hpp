@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 struct graph {
     vector <vector <int> > g;
