@@ -5,13 +5,12 @@ using namespace std;
 
 struct Bitset
 {
-    ull * data;
+    vector<ull> data;
     int n;
     Bitset(const int _n)
     {
         n = (_n + 63) >> 6;
-        data = new ull[n];
-        memset(data, 0, n << 3);
+        data.assign(n, 0ull);
     }
 
     Bitset & operator=(const Bitset & r)
@@ -19,7 +18,7 @@ struct Bitset
         if (this == &r)
             return *this;
         n = r.n;
-        memcpy(data, r.data, n << 3);
+        data = r.data;
         return *this;
     }
 
@@ -30,7 +29,7 @@ struct Bitset
     }
 
     void reset() {
-        memset(data, 0, n << 3);
+        fill(data.begin(), data.end(), 0ull);
     }
     void reset(int pos)
     {
@@ -86,42 +85,42 @@ struct Bitset
         int delta = shift >> 6;
         if (delta >= n)
         {
-            memset(data, 0, n << 3);
+            fill(data.begin(), data.end(), 0ull);
             return;
         }
         shift &= 63;
         if (shift == 0)
         {
-            memmove(data + delta, data, (n - delta) << 3);
-            memset(data, 0, delta << 3);
+            memmove(data.data() + delta, data.data(), (n - delta) << 3);
+            fill(data.begin(), data.begin() + delta, 0ull);
             return;
         }
         for(int i = n - 1; i >= delta + 1; --i)
             data[i] = (data[i - delta] << shift) | (data[i - delta - 1] >> (64 - shift));
 
         data[delta] = data[0] << shift;
-        memset(data, 0, delta << 3);
+        fill(data.begin(), data.begin() + delta, 0ull);
     }
     void operator>>=(int shift)
     {
         int delta = shift >> 6;
         if (delta >= n)
         {
-            memset(data, 0, n << 3);
+            fill(data.begin(), data.end(), 0ull);
             return;
         }
         shift &= 63;
         if (shift == 0)
         {
-            memmove(data, data + delta, (n - delta) << 3);
-            memset(data + n - delta, 0, delta << 3);
+            memmove(data.data(), data.data() + delta, (n - delta) << 3);
+            fill(data.begin() + n - delta, data.end(), 0ull);
             return;
         }
         for(int i = 0; i < n - delta - 1; ++i)
             data[i] = (data[i + delta] >> shift) | (data[i + delta + 1] << (64 - shift));
 
         data[n - delta - 1] = data[n - 1] >> shift;
-        memset(data + n - delta, 0, delta << 3);
+        fill(data.begin() + n - delta, data.end(), 0ull);
     }
 
     int set_of_bits(int * res) const
@@ -150,7 +149,5 @@ struct Bitset
         }
         cout << endl;
     }
-    ~Bitset() {
-        delete data;
-    }
+    ~Bitset() = default;
 };
