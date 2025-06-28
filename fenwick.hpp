@@ -1,3 +1,9 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+using ull = unsigned long long;
+
 // Lightweight Fenwick Tree (Binary Indexed Tree)
 // Supports point updates and prefix sum queries.
 template <class T>

@@ -1,3 +1,8 @@
+#include <bits/stdc++.h>
+
+using ull = unsigned long long;
+using namespace std;
+
 struct Bitset
 {
     ull * data;

@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
 
+using namespace std;
+using ll = long long;
+using ull = unsigned long long;
+
 template <int K>
 struct add_sum {
     vector <long long> block_pref_sum;

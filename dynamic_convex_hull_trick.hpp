@@ -1,3 +1,7 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
 const ll is_query = -(1LL<<62);
 struct Line {
     ll m, b;
