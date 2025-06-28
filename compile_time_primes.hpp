@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 template<size_t a, size_t b>
 struct Min {
     const static size_t value = a < b ? a : b;

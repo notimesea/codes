@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct Point {
     long long x, y;
     Point(long long xx = 0, long long yy = 0) : x(xx), y(yy) {}

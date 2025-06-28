@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct BerlekampMassey {
     int L, m, b, n;
     int mod;
