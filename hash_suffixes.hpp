@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 
 string t;
 vector <long long> hashes;

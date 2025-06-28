@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct Line {
     long long m, b;
 
