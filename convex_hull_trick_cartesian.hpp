@@ -1,7 +1,11 @@
-struct Line {
-    long long m, b;
+#include <climits>
 
-    long long eval(long long x) {
+using ll = long long;
+
+struct Line {
+    ll m, b;
+
+    ll eval(ll x) {
         return m * x + b;
     }
 
@@ -15,7 +19,7 @@ struct Line {
 };
 
 
-long long comp(Line a, Line b, Line c) {
+ll comp(Line a, Line b, Line c) {
     return (b.m - a.m) * (c.b - a.b) + (b.b - a.b) * (a.m - c.m);
 }
 
@@ -190,7 +194,7 @@ struct Hull {
         h.push_back(n);
     }
 
-    long long eval(long long x) {
+    ll eval(ll x) {
         if (cur == nullptr) {
             return LLONG_MAX / 2;
         }

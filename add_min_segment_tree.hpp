@@ -1,3 +1,7 @@
+#include <climits>
+
+using ll = long long;
+
 struct Data {
     int val;
     int pos;

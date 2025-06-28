@@ -25,7 +25,7 @@ typedef pair<int, int> pii;
 //typedef pair<long long, long long> pii;
 typedef vector<long long> vll;
 typedef long double ld;
-typedef long long ll;
+using ll = long long;
 typedef unsigned long long ull;
 typedef int itn;
 typedef unsigned int uint;

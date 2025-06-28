@@ -41,7 +41,7 @@ inline string tostr(const _T &a) {
 }
 
 typedef long double ld;
-typedef long long ll;
+using ll = long long;
 typedef unsigned long long ull;
 typedef pair<int, int> PII;
 const long double PI = 3.1415926535897932384626433832795L;

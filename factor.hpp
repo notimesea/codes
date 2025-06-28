@@ -1,3 +1,7 @@
+#include <climits>
+
+using ll = long long;
+
 ll mulMOD(ll a, ll b, const ll MOD) {
     return __int128(a) * b % MOD;
 }

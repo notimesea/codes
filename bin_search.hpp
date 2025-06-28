@@ -1,3 +1,4 @@
+#include <climits>
 
 struct Searcher {
     int *t;

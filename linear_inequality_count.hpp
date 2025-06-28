@@ -1,3 +1,5 @@
+using ll = long long;
+
 template <typename c_type, typename o_type>
 o_type get_count(c_type A, c_type B, o_type C, o_type X);
 

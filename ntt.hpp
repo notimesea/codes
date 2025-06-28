@@ -1,3 +1,5 @@
+using ll = long long;
+
 const ll mod = 998244353;
 ll root = 3;
 ll root_1 = 0;

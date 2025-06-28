@@ -1,3 +1,7 @@
+#include <climits>
+
+using ll = long long;
+
 struct miller_rabin {
     static ll mulmod(ll a, ll b, ll mod) {
         ll x = 0, y = a % mod;

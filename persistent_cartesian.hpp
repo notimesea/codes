@@ -1,3 +1,7 @@
+#include <climits>
+
+using ll = long long;
+
 struct hdata {
     ll h1;
     ll h2;

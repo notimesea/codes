@@ -16,7 +16,7 @@ typedef vector<int> vi;
 typedef pair<int, int> pii;
 typedef vector<long long> vll;
 typedef long double ld;
-typedef long long ll;
+using ll = long long;
 typedef unsigned long long ull;
 typedef int itn;
 
