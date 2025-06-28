@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define pb push_back
+#define all(x) (x).begin(), (x).end()
+
 struct graph {
     vector <vector <int> > g;
     vector <int> size;
