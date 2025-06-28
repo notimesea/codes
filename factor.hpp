@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
 ll mulMOD(ll a, ll b, const ll MOD) {
     return __int128(a) * b % MOD;

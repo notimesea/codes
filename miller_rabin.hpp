@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using ll = long long;
 
 struct miller_rabin {
     static ll mulmod(ll a, ll b, ll mod) {

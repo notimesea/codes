@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using ll = long long;
 
 struct Data {
     int val;
