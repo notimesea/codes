@@ -18,7 +18,8 @@ struct Hull {
     vector <Line> lines;
 
     void add(const Line &line) {
-        if (!lines.empty()) assert(line.m > lines.back().m || (line.m == lines.back().m && line.b > /* < for minima */ lines.back().b);
+        if (!lines.empty()) assert(line.m > lines.back().m ||
+               (line.m == lines.back().m && line.b > /* < for minima */ lines.back().b));
         while (lines.size() >= 2 && comp(lines[lines.size() - 2], lines[lines.size() - 1], line) >= 0 /* <= 0 for minima */) {
             lines.pop_back();
         }
