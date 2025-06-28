@@ -14,7 +14,7 @@ struct Num {
         }
     }
 
-    static Num build(ld value) {
+    static Num build(T value) {
         Num res;
         res.lv = value;
         return res;
