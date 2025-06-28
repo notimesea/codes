@@ -9,31 +9,31 @@ All source files live in the repository root. They are grouped below for
 convenience.
 
 ### Data structures
-- `fenwick` – binary indexed tree
-- `HashMap` – open addressing hash table
-- `Bitset` – dynamic bitset implementation
-- `segmentTreeIntervalModification` – segment tree example
-- `implicitTreap`, `persistentCartesian` – treaps
+- `fenwick.hpp` – binary indexed tree
+- `hash_map.cpp` – open addressing hash table
+- `bitset.hpp` – dynamic bitset implementation
+- `segment_tree_interval_modification.hpp` – segment tree example
+- `implicit_treap.hpp`, `persistent_cartesian.hpp` – treaps
 
 ### Graph algorithms
-- `2sat` – boolean satisfiability solver
-- `dinic` – maximum flow
-- `hopcroftKarp` – bipartite matching
-- `dominatorTree`, `eulerTourLinkCut`, `centroidDecomposition`
+- `2sat.hpp` – boolean satisfiability solver
+- `dinic.hpp` – maximum flow
+- `hopcroft_karp.cpp` – bipartite matching
+- `dominator_tree.hpp`, `euler_tour_link_cut.hpp`, `centroid_decomposition.hpp`
 
 ### Number theory & math
-- `MillerRabin` – primality test
-- `ntt` – number theoretic transform
-- `karatsuba` – fast multiplication
-- `compileTimePrimes`, `primeCount`, `poly_inverse`
-- `subsetConvolution`, `sumAndCountPrimes`
+- `miller_rabin.hpp` – primality test
+- `ntt.hpp` – number theoretic transform
+- `karatsuba.hpp` – fast multiplication
+- `compile_time_primes.hpp`, `prime_count.hpp`, `poly_inverse.hpp`
+- `subset_convolution.hpp`, `sum_and_count_primes.cpp`
 
 ### String algorithms
-- `AhoCorasickOccurences` – Aho–Corasick automaton
-- `suffixArrayTree`, `palindromicTree`, `hashSuffixes`
+- `aho_corasick_occurences.cpp` – Aho–Corasick automaton
+- `suffix_array_tree.cpp`, `palindromic_tree.hpp`, `hash_suffixes.hpp`
 
 ### Miscellaneous
-- `fastInput`, `fastDivider`, `hll`, etc.
+- `fast_input.hpp`, `fast_divider.hpp`, `hll.hpp`, etc.
 
 The `test` directory contains simplified test versions of some snippets.
 
