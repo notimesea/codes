@@ -1,7 +1,4 @@
-#include <cstddef>
-#include <cstdio>
-#include <cstring>
-#include <cctype>
+#include <bits/stdc++.h>
 
 namespace Scanner {
     const static int BUF_SIZE = 65536;
