@@ -9,7 +9,9 @@
 
 using namespace std;
 
-template<class K, class V, int D = 20, K to_xor = 10778448979374848739ull, K to_mul = 14774228369217122871ull>
+template<class K, class V, int D = 20,
+         unsigned long long to_xor = 10778448979374848739ull,
+         unsigned long long to_mul = 14774228369217122871ull>
 struct HashMap {
     enum State {
         free,
