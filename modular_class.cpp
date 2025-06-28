@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 template<long long modulo>
 struct Number {
