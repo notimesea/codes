@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct segmentTree {
 
     inline int modifyOperation(int x, int y) {

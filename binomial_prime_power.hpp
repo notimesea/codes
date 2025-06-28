@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 constexpr long long get_power(long long p, int e) {
     long long res = 1;
     for (int i = 0; i < e; i++) {

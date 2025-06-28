@@ -1,4 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+
 #define forn(i, n) for (int i = 0; i < (int)(n); i++)
+
+template<typename T>
+void input(T &x) {
+    cin >> x;
+}
+
+template<typename T = long long>
+T nxt() {
+    T x;
+    input(x);
+    return x;
+}
 
 const int V = 3000;
 const int E = 1500 * 1500;
