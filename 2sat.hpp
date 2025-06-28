@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 // 2-SAT solver based on Kosaraju's SCC algorithm
 // Variables are indexed from 0..n-1. For each variable x we use

@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 namespace DOM {
     const int N=1e6+5,M=1e6+5;
