@@ -1,4 +1,8 @@
 #include <bits/stdc++.h>
+using namespace std;
+
+using vi = vector<int>;
+#define forn(i, n) for (int i = 0; i < (int)(n); ++i)
 
 int MOD = 1000000007;
 
@@ -14,6 +18,7 @@ int mulmod(int x, int y, int mod) {
 
 
 typedef double D;
+const D PI = acos((D)-1);
 const int N = 1 << 17;
 
 struct C {

@@ -8,6 +8,9 @@ using namespace std;
 #define ford(i, n) for (int i = (n) - 1; i >= 0; --i)
 #define pii pair <int, int>
 #define vi vector <int>
+#define fi first
+#define se second
+#define mp make_pair
 
 const int N = 1010;
 vector<pair<pii, string>> allEdges;
