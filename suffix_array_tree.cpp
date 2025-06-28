@@ -492,7 +492,7 @@ inline void input(T &a) {
     if (neg) a = -a;
 }
 
-template<typename T = long long>
+template<typename T>
 inline T nxt() {
     T res;
     input(res);
