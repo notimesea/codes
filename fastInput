@@ -25,6 +25,7 @@ namespace Scanner {
         int res = 0;
         while (isdigit(input[pos])) {
             res = res * 10 + input[pos] - '0';
+            ++pos;
         }
         return sign ? -res : res;
     }
