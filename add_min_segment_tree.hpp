@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using ll = long long;
 
+using namespace std;
+
 struct Data {
     int val;
     int pos;

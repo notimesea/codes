@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
+using namespace std;
 
 mt19937 generator;
+
+inline int nxt() { int x; if(!(cin>>x)) x=0; return x; }
 
 template <class K, class V>
 struct node {
@@ -75,7 +78,7 @@ void test() {
     node * root = 0;
 
     for (int i = 0; i < n; ++i) {
-        merge(root, root, new node(i + 1));
+        merge(root, root, new node<int,int>(i + 1));
     }
 
     while (m--) {

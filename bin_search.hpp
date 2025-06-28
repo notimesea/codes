@@ -7,12 +7,12 @@ struct Searcher {
     int iters;
     size_t alignment;
 
-    Searcher(const span<int> &a) {
+    Searcher(const std::vector<int> &a) {
         n = a.size();
         auto size = sizeof(int) * (n + 1);
-        alignment = hardware_destructive_interference_size;
+        alignment = std::hardware_destructive_interference_size;
         size += alignment - size % alignment;
-        t = (int *)(std::aligned_alloc(hardware_destructive_interference_size, size));
+        t = (int *)(std::aligned_alloc(std::hardware_destructive_interference_size, size));
         t[0] = INT_MIN;
         iters = std::__lg(n + 1);
 
@@ -24,7 +24,7 @@ struct Searcher {
         free(t); 
     }
 
-    void eytzinger(const span<int> &a, int k, int &i) {
+    void eytzinger(const std::vector<int> &a, int k, int &i) {
         if (k <= a.size()) {
             eytzinger(a, 2 * k, i);
             t[k] = a[i++];
