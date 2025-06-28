@@ -4,6 +4,7 @@
 
 #include <bits/stdc++.h>
 
+// Simple open-addressing hash map for integer keys.
 //#pragma GCC optimize ("O3")
 
 using namespace std;
@@ -31,6 +32,7 @@ struct HashMap {
         size = 0;
     }
 
+    // returns slot for key k (inserts if empty)
     Node &find(const K& k) {
         size_t h = hash(k);
         while (nodes[h].state == State::used && nodes[h].key != k) {
@@ -39,6 +41,7 @@ struct HashMap {
         return nodes[h];
     }
 
+    // const version of find
     const Node &find(const K& k) const {
         size_t h = hash(k);
         while (nodes[h].state == State::used && nodes[h].key != k) {
@@ -47,6 +50,7 @@ struct HashMap {
         return nodes[h];
     }
 
+    // access value by key (inserts new element if needed)
     V& operator[](const K& k) {
         Node &node = find(k);
 
@@ -57,6 +61,7 @@ struct HashMap {
         return node.value;
     }
 
+    // returns true if key k exists in the map
     bool count(const K& k) const {
         const Node &node = find(k);
 
