@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "../2sat.hpp"
+#include "2sat.hpp"
 int main(){
     sat2 s(1);
     s.init();
