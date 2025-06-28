@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 #include "../2sat"
 int main(){

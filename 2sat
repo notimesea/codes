@@ -1,4 +1,7 @@
 
+// 2-SAT solver based on Kosaraju's SCC algorithm
+// Variables are indexed from 0..n-1. For each variable x we use
+// indices 2*x for x and 2*x+1 for !x.
 struct sat2 {
     int n;
 
@@ -16,6 +19,7 @@ struct sat2 {
 
     }
 
+    // allocate internal structures for n variables
     inline void init() {
         g.assign(n + n, vector <int>());
         gr.assign(n + n, vector <int>());
@@ -23,11 +27,13 @@ struct sat2 {
         comp.assign(n + n, -1);
     }
 
+    // add implication u -> v
     inline void add(int u, int v) {
         g[u].push_back(v);
         gr[v].push_back(u);
     }
 
+    // first pass of Kosaraju's algorithm
     inline void dfs1(int v) {
 
         used[v] = 1;
@@ -39,6 +45,7 @@ struct sat2 {
         order.push_back(v);
     }
 
+    // second pass assigning component numbers
     inline void dfs2(int v, int c) {
 
         comp[v] = c;
@@ -49,6 +56,7 @@ struct sat2 {
         }
     }
 
+    // returns true if the 2-SAT instance is satisfiable
     inline bool check() {
 
         for (int i = 0; i < 2 * n; ++i) {
