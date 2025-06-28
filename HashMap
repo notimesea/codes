@@ -60,7 +60,7 @@ struct HashMap {
     bool count(const K& k) const {
         const Node &node = find(k);
 
-        return nodes.state == State::used;
+        return node.state == State::used;
     }
 };
 
