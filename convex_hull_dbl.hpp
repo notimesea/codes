@@ -1,3 +1,4 @@
+// Convex hull for points with doubles.
 #include <bits/stdc++.h>
 
 const long double eps = 1e-9;

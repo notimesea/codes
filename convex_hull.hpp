@@ -1,3 +1,4 @@
+// Convex hull for points with integer coords.
 #include <bits/stdc++.h>
 
 struct Point {

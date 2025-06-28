@@ -1,3 +1,6 @@
+// Pollard-Rho integer factorization.
+#include <bits/stdc++.h>
+
 ll mulMOD(ll a, ll b, const ll MOD) {
     return __int128(a) * b % MOD;
 }

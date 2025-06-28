@@ -1,3 +1,6 @@
+// Karatsuba multiplication template.
+#include <bits/stdc++.h>
+
 
 template <class T>
 struct karatsuba {

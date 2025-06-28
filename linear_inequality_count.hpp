@@ -1,3 +1,6 @@
+// Count solutions to linear inequalities.
+#include <bits/stdc++.h>
+
 template <typename c_type, typename o_type>
 o_type get_count(c_type A, c_type B, o_type C, o_type X);
 

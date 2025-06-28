@@ -1,3 +1,6 @@
+// Number representation in log space.
+#include <bits/stdc++.h>
+
 template <typename T>
 struct Num {
     T lv;

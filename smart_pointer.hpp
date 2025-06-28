@@ -1,3 +1,6 @@
+// Reference counting smart pointer.
+#include <bits/stdc++.h>
+
 template <class item>
 struct pitem {
     item *data;

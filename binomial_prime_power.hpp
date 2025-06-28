@@ -1,3 +1,4 @@
+// Binomial coefficients mod prime power via templates.
 #include <bits/stdc++.h>
 
 constexpr long long get_power(long long p, int e) {

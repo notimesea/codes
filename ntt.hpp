@@ -1,3 +1,6 @@
+// NTT implementation. Needs pw() and inv() helpers.
+#include <bits/stdc++.h>
+
 const ll mod = 998244353;
 ll root = 3;
 ll root_1 = 0;

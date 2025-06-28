@@ -1,3 +1,10 @@
+// Persistent Cartesian tree with hashing.
+#include <bits/stdc++.h>
+using ll = long long;
+
+// Base used for polynomial hashing inside the treap
+const ll Q = 239017;
+
 struct hdata {
     ll h1;
     ll h2;
@@ -20,7 +27,7 @@ struct hdata {
     hdata(int key) {
         h1 = key;
         h2 = key;
-        h2 = Q;
+        h3 = Q;
     }
 };
 

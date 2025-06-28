@@ -1,3 +1,6 @@
+// XOR convolution via Walsh transform.
+#include <bits/stdc++.h>
+
 template <class T>
 void walshTransform(T * data, int n) {
     for (int len = 2; len <= n; len <<= 1) {

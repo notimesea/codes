@@ -1,3 +1,4 @@
+// Segment tree supporting interval modification.
 #include <bits/stdc++.h>
 
 struct segmentTree {

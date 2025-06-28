@@ -1,3 +1,6 @@
+// Binary search helper on arrays.
+#include <bits/stdc++.h>
+
 
 struct Searcher {
     int *t;

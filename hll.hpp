@@ -1,3 +1,6 @@
+// HyperLogLog cardinality estimator.
+#include <bits/stdc++.h>
+
 template <int np_ = 14>
 struct hll {
     uint8_t data[1 << np_];

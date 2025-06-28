@@ -1,3 +1,6 @@
+// Range-add segment tree with global arrays. Needs ll=long long alias.
+#include <bits/stdc++.h>
+
 struct Data {
     int val;
     int pos;

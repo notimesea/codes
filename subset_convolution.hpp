@@ -1,3 +1,4 @@
+// Subset convolution using DP.
 //
 // Created by Evgeny Savinov on 08/09/16.
 //

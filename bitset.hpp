@@ -1,3 +1,4 @@
+// Dynamic bitset using 64-bit blocks.
 #include <bits/stdc++.h>
 
 using ull = unsigned long long;

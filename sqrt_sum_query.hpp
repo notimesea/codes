@@ -1,3 +1,4 @@
+// sqrt-decomposition with range sum/update.
 #include <bits/stdc++.h>
 
 using namespace std;

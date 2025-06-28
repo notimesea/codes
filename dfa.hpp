@@ -1,3 +1,6 @@
+// Deterministic finite automaton container.
+#include <bits/stdc++.h>
+
 struct Automaton {
     using moves_t = vector <pair <int, int> >;
     vector <moves_t> go;

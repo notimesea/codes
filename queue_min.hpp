@@ -1,3 +1,4 @@
+// Monotonic queue supporting O(1) min.
 #include <bits/stdc++.h>
 
 struct queueMin {

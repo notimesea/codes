@@ -1,3 +1,4 @@
+// 2-SAT solver using Kosaraju's SCC. Requires vector<int>. Call init(), add(), check().
 #include <bits/stdc++.h>
 
 // 2-SAT solver based on Kosaraju's SCC algorithm

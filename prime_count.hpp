@@ -1,3 +1,4 @@
+// Prime counting via Meissel-Lehmer method.
 #include <bits/stdc++.h>
 
 const int N = 1000000;

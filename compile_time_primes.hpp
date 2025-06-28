@@ -1,3 +1,4 @@
+// Compile-time prime sieve using templates.
 #include <bits/stdc++.h>
 
 template<size_t a, size_t b>

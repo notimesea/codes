@@ -1,3 +1,6 @@
+// Rolling hash of string suffixes. Requires global mod.
+#include <bits/stdc++.h>
+
 
 string t;
 vector <long long> hashes;

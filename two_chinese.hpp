@@ -1,3 +1,4 @@
+// Graph algorithm with helper macros forn/ford.
 #include <bits/stdc++.h>
 
 #define forn(i, n) for (int i = 0; i < (n); ++i)

@@ -1,3 +1,6 @@
+// Heavy-light decomposition for trees.
+#include <bits/stdc++.h>
+
 struct Hld {
     vector <int> path;
     vector <vector <int> > g;

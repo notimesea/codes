@@ -1,3 +1,6 @@
+// Implicit treap for sequence operations.
+#include <bits/stdc++.h>
+
 mt19937 generator;
 
 template <class K, class V>

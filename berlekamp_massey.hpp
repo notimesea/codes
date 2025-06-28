@@ -1,3 +1,4 @@
+// Berlekamp-Massey for minimal recurrence. Provide modulus.
 #include <bits/stdc++.h>
 
 struct BerlekampMassey {

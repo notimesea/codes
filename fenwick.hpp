@@ -1,3 +1,4 @@
+// Fenwick tree for prefix sums.
 #include <bits/stdc++.h>
 
 using namespace std;

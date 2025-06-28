@@ -1,3 +1,4 @@
+// Centroid decomposition for trees.
 #include <bits/stdc++.h>
 
 struct graph {
