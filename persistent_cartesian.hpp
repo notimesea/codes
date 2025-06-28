@@ -3,6 +3,7 @@ using ll = long long;
 
 // Base used for polynomial hashing inside the treap
 const ll Q = 239017;
+
 struct hdata {
     ll h1;
     ll h2;
