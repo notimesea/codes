@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct hdata {
     ll h1;
     ll h2;

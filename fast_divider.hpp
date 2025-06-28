@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct divider_32 {
     uint32_t value;
     uint32_t magic;

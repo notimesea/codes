@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct PalTree {
     const static int maxn = 111111;
 

@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 namespace DOM {
     const int N=1e6+5,M=1e6+5;
     int cnt,dfn_cnt,last[N],lastpre[N],lastsdom[N],dfn[N],id[N],par[N],fa[N],best[N],sdom[N],idom[N],size[N];
