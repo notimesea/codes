@@ -1,2 +1,2 @@
-Useful code snippets for programing contests (e.g. Codeforces, TopCoder, etc)
+Useful code snippets for programming contests (e.g. Codeforces, TopCoder, etc)
 =====
