@@ -58,7 +58,7 @@ struct divider_64 {
     uint8_t more;
 
     static inline uint64_t div_64_to_64(uint64_t u1, uint64_t u0, uint64_t v, uint64_t *r) {
-        const uint64_t b = (1ULL << 32); // Number base (16 bits)
+        const uint64_t b = (1ULL << 32); // Number base (32 bits)
         uint64_t un1, un0; // Norm. dividend LSD's
         uint64_t vn1, vn0; // Norm. divisor digits
         uint64_t q1, q0; // Quotient digits
