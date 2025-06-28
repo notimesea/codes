@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct Data {
     int val;
     int pos;

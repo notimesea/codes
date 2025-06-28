@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 namespace Scanner {
     const static int BUF_SIZE = 65536;
     static char input[BUF_SIZE];

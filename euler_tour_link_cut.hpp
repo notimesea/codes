@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct euler_tour_tree {
     struct node {
         int x, s;

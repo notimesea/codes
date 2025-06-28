@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 mt19937 generator;
 
 template <class K, class V>
