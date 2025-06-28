@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define all(x) (x).begin(), (x).end()
 #include "../2sat"
 int main(){
     sat2 s(1);
