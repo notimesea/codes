@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 template<long long modulo>
 struct Number {
     long long value;

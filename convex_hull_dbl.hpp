@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 const long double eps = 1e-9;
 
 struct Point {

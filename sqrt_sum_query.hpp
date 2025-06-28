@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 template <int K>
 struct add_sum {
     vector <long long> block_pref_sum;

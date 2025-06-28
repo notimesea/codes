@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 const int N = 1000000;
 
 int lp[N + 1];

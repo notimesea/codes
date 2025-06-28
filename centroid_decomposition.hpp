@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 struct graph {
     vector <vector <int> > g;
     vector <int> size;
