@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define pb push_back
+#define all(x) (x).begin(), (x).end()
+
 #define forn(i, n) for (int i = 0; i < (n); ++i)
 #define ford(i, n) for (int i = (n) - 1; i >= 0; --i)
 #define pii pair <int, int>

@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define pb push_back
+#define all(x) (x).begin(), (x).end()
+
 struct segmentTree {
 
     inline int modifyOperation(int x, int y) {

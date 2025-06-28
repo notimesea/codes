@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define pb push_back
+#define all(x) (x).begin(), (x).end()
+
 struct Automaton {
     using moves_t = vector <pair <int, int> >;
     vector <moves_t> go;
