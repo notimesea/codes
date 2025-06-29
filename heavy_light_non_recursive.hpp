@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define mp make_pair
+#define x first
+#define y second
+
 struct Hld {
     vector<int> path;
     vector<vector<int> > g;

@@ -4,6 +4,14 @@ using ll = long long;
 
 #define pb push_back
 #define all(x) (x).begin(), (x).end()
+#define forn(i, n) for (int i = 0; i < (n); ++i)
+#define vi vector<int>
+#define vll vector<long long>
+#define mp make_pair
+#define x first
+#define y second
+
+inline int nxt() { int v; if(!(cin>>v)) v=0; return v; }
 
 namespace DOM {
     const int N=1e6+5,M=1e6+5;

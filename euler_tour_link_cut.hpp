@@ -162,7 +162,7 @@ void testTree() {
     }
     int ss = 0;
     for (int i = 1; i < N; ++i) {
-        ss += nodes[i - 1]->first;
+        ss += nodes[i - 1]->x;
         for (int j = 0; j < i; ++j) {
             assert(ss == tree.sum_in_component(nodes[j]));
         }
@@ -175,7 +175,7 @@ void testTree() {
         for (int j = 0; j < i; ++j) {
             assert(ss == tree.sum_in_component(nodes[j]));
         }
-        ss -= nodes[i - 1]->first;
+        ss -= nodes[i - 1]->x;
     }
  
     exit(0);

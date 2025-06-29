@@ -1,4 +1,7 @@
 #include <bits/stdc++.h>
+using namespace std;
+#define x first
+#define y second
 using ll = long long;
 
 // Base used for polynomial hashing inside the treap
@@ -57,11 +60,11 @@ struct item {
     }
 };
 
-hdata empty;
+hdata empty_h;
 
 hdata geth(pitem t) {
     if (t != nullptr) return t->hash;
-    else return empty;
+    else return empty_h;
 }
 
 int getq(pitem t) {
