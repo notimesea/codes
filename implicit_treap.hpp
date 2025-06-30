@@ -66,7 +66,7 @@ struct node {
 };
 
 void test() {
-  function <void(node*)> print = [&](node *v) {
+  function<void(node<int,int>*)> print = [&](node<int,int>* v) {
         if (!v) return;
         print(v->l);
         printf("%d ", v->key);
@@ -75,7 +75,7 @@ void test() {
 
     int n = nxt(), m = nxt();
 
-    node * root = 0;
+    node<int,int> * root = 0;
 
     for (int i = 0; i < n; ++i) {
         merge(root, root, new node<int,int>(i + 1));
@@ -83,7 +83,7 @@ void test() {
 
     while (m--) {
         int l = nxt() - 1, r = nxt();
-        node *x, *y;
+        node<int,int> *x, *y;
         split(root, x, root, r);
         split(x, y, x, l);
         merge(x, x, y);

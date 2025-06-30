@@ -7,6 +7,20 @@ ll root = 3;
 ll root_1 = 0;
 const ll root_pw = 1<<20;
 
+inline ll pw(ll a, ll n, ll m) {
+    ll r = 1;
+    while (n) {
+        if (n & 1) r = r * a % m;
+        a = a * a % m;
+        n >>= 1;
+    }
+    return r;
+}
+
+inline ll inv(ll a, ll m) {
+    return pw(a, m - 2, m);
+}
+
 void pre() {
     while (true) {
         if (pw(root, root_pw, mod) == 1 && pw(root, root_pw / 2, mod) == mod - 1) {
