@@ -2,6 +2,24 @@
 using namespace std;
 using ll = long long;
 
+template<typename T>
+T pw(T a, T n, T m) {
+    T res = 1;
+    while (n) {
+        if (n & 1) {
+            res = (res * a) % m;
+        }
+        a = (a * a) % m;
+        n >>= 1;
+    }
+    return res;
+}
+
+template<typename T>
+T inv(T a, T p) {
+    return pw(a, p - 2, p);
+}
+
 const ll mod = 998244353;
 ll root = 3;
 ll root_1 = 0;
